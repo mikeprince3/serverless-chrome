@@ -67,21 +67,17 @@ export default async function crawlUrl (url, mobile = false) {
 
     log('page loaded')
 
-    await sleep(100)
-    
-
-    log('collecting data')
-
     const expression = `({
       url: window.location.href,
       title: document.title,
-      text: document.documentElement.outerText,
-      html: document.documentElement.outerHTML,
       height: document.body.scrollHeight
     })`;
 
     const contentResult = await Runtime.evaluate({expression, returnByValue: true});
-    
+
+    log('contentResult', contentResult)
+
+
     var resultObj = contentResult.result.value;
     
     await Emulation.setDeviceMetricsOverride({
