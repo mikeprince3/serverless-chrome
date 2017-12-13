@@ -23,7 +23,7 @@ export default async function crawlUrl (url, mobile = false) {
   } = client
 
   Network.requestWillBeSent((params) => {
-    log('Chrome is sending request for:', params.request.url, redirectResponse)
+    log('Chrome is sending request for:', params.request.url, params.redirectResponse)
   })
 
   Network.responseReceived((params) => {
