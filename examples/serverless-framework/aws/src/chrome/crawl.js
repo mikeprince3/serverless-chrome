@@ -67,6 +67,7 @@ export default async function crawlUrl (url, mobile = false) {
 
     log('page loaded')
 
+    /*
     const { result: { value: { height } } } = await Runtime.evaluate({
       expression: `(
         () => ({ height: document.body.scrollHeight })
@@ -74,10 +75,10 @@ export default async function crawlUrl (url, mobile = false) {
       `,
       returnByValue: true,
     })
-
+*/
 
     log('collecting data')
-    
+
     const expression = `({
       url: window.location.href,
       title: document.title,
