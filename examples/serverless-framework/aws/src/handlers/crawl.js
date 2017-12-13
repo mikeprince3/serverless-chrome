@@ -1,5 +1,5 @@
 import log from '../utils/log'
-import screenshot from '../chrome/screenshot'
+import crawl from '../chrome/crawl'
 
 export default async function handler (event, context, callback) {
   const {
@@ -16,7 +16,7 @@ export default async function handler (event, context, callback) {
   const startTime = Date.now()
 
   try {
-    screenshotData = await screenshot(url, mobile)
+    screenshotData = await crawl(url, mobile)
   } catch (error) {
     console.error('Error capturing screenshot for', url, error)
     return callback(error)
@@ -24,7 +24,7 @@ export default async function handler (event, context, callback) {
 
   log(`Chromium took ${Date.now() - startTime}ms to load URL and capture screenshot.`)
 
-        screenshotData.text = null
+        //screenshotData.text = null
 //      screenshotData.html = null
 
   return callback(null, {
