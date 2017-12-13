@@ -102,7 +102,7 @@ export default async function crawlUrl (url, mobile = false) {
       height: height
     })
 
-    const screenshot = await Page.captureScreenshot({ format: 'jpg', quality: 60, clip })
+    const screenshot = await Page.captureScreenshot({ format: 'jpeg', quality: 60, clip })
 
     resultObj.screenshot = screenshot.data;
 
