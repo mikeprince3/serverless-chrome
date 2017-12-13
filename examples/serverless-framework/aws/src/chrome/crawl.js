@@ -14,7 +14,7 @@ export default async function crawlUrl (url, mobile = false) {
       await loading(startTime)
     }
   }
-
+ 
   const [tab] = await Cdp.List()
   const client = await Cdp({ host: '127.0.0.1', target: tab })
 
