@@ -51,6 +51,16 @@ functions:
           path: screenshot
           method: get
 
+  crawl:
+    description: Headless Chrome Serverless-framework crawl
+    memorySize: 1536
+    timeout: 30
+    handler: src/handlers/crawl.default
+    events:
+      - http:
+          path: crawl
+          method: get
+
   pdf:
     description: Headless Chrome Serverless-framework PDF example
     memorySize: 1536
