@@ -26,6 +26,12 @@ export default async function crawlUrl (url, mobile = false) {
     log('Chrome is sending request for:', params.request.url)
   })
 
+  Network.responseReceived((params) => {
+    //const {status, url} = params.response;
+    console.log('responseReceived', params);
+  });
+
+
   Page.loadEventFired(() => {
     loaded = true
   })
@@ -39,6 +45,13 @@ export default async function crawlUrl (url, mobile = false) {
           'Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_1 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14A403 Safari/602.1',
       })
     }
+    else {
+      await Network.setUserAgentOverride({
+        userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+      })
+    }
+
 
     await Emulation.setDeviceMetricsOverride({
       mobile: !!mobile,
