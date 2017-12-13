@@ -82,7 +82,7 @@ export default async function crawlUrl (url, mobile = false) {
       log('content result exception', contentResult.exceptionDetails)
     }
 
-    const metrics = await Page.getLayoutMetrics;
+    const metrics = await Page.getLayoutMetrics();
     const width = Math.ceil(metrics.contentSize.width);
     const height = Math.ceil(metrics.contentSize.height);
 
