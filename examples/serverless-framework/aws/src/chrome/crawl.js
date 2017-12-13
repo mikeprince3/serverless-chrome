@@ -69,14 +69,6 @@ export default async function crawlUrl (url, mobile = false) {
 
     await sleep(100)
     
-    const { result: { value: { height } } } = await Runtime.evaluate({
-      expression: `(
-        () => ({ height: document.body.scrollHeight })
-      )();
-      `,
-      returnByValue: true,
-    })
-
 
     log('collecting data')
 
@@ -84,7 +76,8 @@ export default async function crawlUrl (url, mobile = false) {
       url: window.location.href,
       title: document.title,
       text: document.documentElement.outerText,
-      html: document.documentElement.outerHTML
+      html: document.documentElement.outerHTML,
+      height: document.body.scrollHeight
     })`;
 
     const contentResult = await Runtime.evaluate({expression, returnByValue: true});
@@ -97,7 +90,7 @@ export default async function crawlUrl (url, mobile = false) {
       scale: 1, // mobile ? 2 : 1,
       fitWindow: false,
       width: mobile ? 375 : 1280,
-      height: height > 5000 ? 5000 : height,
+      height: resultObj.height > 5000 ? 5000 : resultObj.height,
     })
 
     const screenshot = await Page.captureScreenshot({ format: 'png' })
