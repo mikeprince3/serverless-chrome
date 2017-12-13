@@ -85,7 +85,7 @@ export default async function crawlUrl (url, mobile = false) {
 
     const metrics = await Page.getLayoutMetrics();
     const width = Math.ceil(metrics.contentSize.width);
-    const height = Math.min(Math.ceil(metrics.contentSize.height, 5000));
+    const height = Math.min(Math.ceil(metrics.contentSize.height, 3000));
 
     const clip = { x: 0, y: 0, width, height, scale: 1 };
 
@@ -102,7 +102,7 @@ export default async function crawlUrl (url, mobile = false) {
       height: height
     })
 
-    const screenshot = await Page.captureScreenshot({ format: 'png', clip })
+    const screenshot = await Page.captureScreenshot({ format: 'jpg', quality: 60, clip })
 
     resultObj.screenshot = screenshot.data;
 
