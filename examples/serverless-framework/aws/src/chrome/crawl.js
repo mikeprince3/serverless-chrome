@@ -23,7 +23,7 @@ export default async function crawlUrl (url, mobile = false) {
   } = client
 
   Network.requestWillBeSent((params) => {
-    //log('Chrome is sending request for:', params.request.url, params.redirectResponse)
+    log('Chrome is sending request for:', params.request.url, params.redirectResponse)
   })
 
 //  Network.responseReceived((params) => {
@@ -75,6 +75,8 @@ export default async function crawlUrl (url, mobile = false) {
       returnByValue: true,
     })
 
+
+    log('collecting data')
     
     const expression = `({
       url: window.location.href,
