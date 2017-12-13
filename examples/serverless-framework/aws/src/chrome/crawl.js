@@ -7,9 +7,10 @@ export default async function crawlUrl (url, mobile = false) {
 
   let result
   let loaded = false
+  let bodyFound = false;
 
   const loading = async (startTime = Date.now()) => {
-    if (!loaded && Date.now() - startTime < LOAD_TIMEOUT) {
+    if (!loaded && !bodyFound && Date.now() - startTime < LOAD_TIMEOUT) {
       await sleep(100)
       await loading(startTime)
     }
@@ -70,26 +71,37 @@ export default async function crawlUrl (url, mobile = false) {
     const expression = `({
       url: window.location.href,
       title: document.title,
-      height: document.body.scrollHeight
+      text: document.documentElement.outerText,
+      html: document.documentElement.outerHTML
     })`;
 
     const contentResult = await Runtime.evaluate({expression, returnByValue: true});
+    
+    if (contentResult.exceptionDetails !== undefined && contentResult.exceptionDetails !== null)
+    {
+      log('content result exception', contentResult.exceptionDetails)
+    }
 
-    log('contentResult', contentResult)
+    const metrics = await Page.getLayoutMetrics;
+    const width = Math.ceil(metrics.contentSize.width);
+    const height = Math.ceil(metrics.contentSize.height);
+
+    const clip = { x: 0, y: 0, width, height, scale: 1 };
 
 
+    
     var resultObj = contentResult.result.value;
     
     await Emulation.setDeviceMetricsOverride({
       mobile: !!mobile,
-      deviceScaleFactor: 0,
+      deviceScaleFactor: 1,
       scale: 1, // mobile ? 2 : 1,
-      fitWindow: false,
-      width: mobile ? 375 : 1280,
-      height: resultObj.height > 5000 ? 5000 : resultObj.height,
+      //fitWindow: false,
+      width: width,
+      height: height
     })
 
-    const screenshot = await Page.captureScreenshot({ format: 'png' })
+    const screenshot = await Page.captureScreenshot({ format: 'png', clip })
 
     resultObj.screenshot = screenshot.data;
 
