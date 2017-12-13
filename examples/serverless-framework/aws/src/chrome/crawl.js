@@ -67,6 +67,7 @@ export default async function crawlUrl (url, mobile = false) {
 
     log('page loaded')
 
+    await sleep(100)
     
     const { result: { value: { height } } } = await Runtime.evaluate({
       expression: `(
