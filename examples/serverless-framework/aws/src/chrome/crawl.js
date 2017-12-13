@@ -7,10 +7,9 @@ export default async function crawlUrl (url, mobile = false) {
 
   let result
   let loaded = false
-  let bodyFound = false;
 
   const loading = async (startTime = Date.now()) => {
-    if (!loaded && !bodyFound && Date.now() - startTime < LOAD_TIMEOUT) {
+    if (!loaded && Date.now() - startTime < LOAD_TIMEOUT) {
       await sleep(100)
       await loading(startTime)
     }
@@ -65,6 +64,8 @@ export default async function crawlUrl (url, mobile = false) {
     await Page.navigate({ url })
     await Page.loadEventFired()
     await loading()
+
+    await sleep(1000)
 
     log('page loaded')
 
