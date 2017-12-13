@@ -65,6 +65,8 @@ export default async function crawlUrl (url, mobile = false) {
     await Page.loadEventFired()
     await loading()
 
+    log('page loaded')
+
     const { result: { value: { height } } } = await Runtime.evaluate({
       expression: `(
         () => ({ height: document.body.scrollHeight })
