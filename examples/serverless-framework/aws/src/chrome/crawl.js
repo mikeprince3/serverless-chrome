@@ -85,7 +85,7 @@ export default async function crawlUrl (url, mobile = false) {
 
     const metrics = await Page.getLayoutMetrics();
     const width = Math.ceil(metrics.contentSize.width);
-    const height = Math.ceil(metrics.contentSize.height);
+    const height = Math.min(Math.ceil(metrics.contentSize.height, 5000));
 
     const clip = { x: 0, y: 0, width, height, scale: 1 };
 
