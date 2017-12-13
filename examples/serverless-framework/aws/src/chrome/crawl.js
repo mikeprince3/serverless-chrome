@@ -73,9 +73,9 @@ export default async function crawlUrl (url, mobile = false) {
       url: window.location.href,
       title: document.title,
       text: document.documentElement.outerText,
-      html: document.documentElement.outerHTML
+      
     })`;
-
+//html: document.documentElement.outerHTML
     const contentResult = await Runtime.evaluate({expression, returnByValue: true});
     
     if (contentResult.exceptionDetails !== undefined && contentResult.exceptionDetails !== null)
