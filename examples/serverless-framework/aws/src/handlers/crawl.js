@@ -1,5 +1,5 @@
 import log from '../utils/log'
-import crawl from '../chrome/crawl'
+import screenshot from '../chrome/screenshot'
 
 export default async function handler (event, context, callback) {
   const {
@@ -9,27 +9,30 @@ export default async function handler (event, context, callback) {
     },
   } = event
 
-  let data
+  let screenshotData
 
-  log('Processing crawl for', url)
+  log('Processing screenshot capture for', url)
 
   const startTime = Date.now()
 
   try {
-    data = await crawl(url, mobile)
+    screenshotData = await screenshot(url, mobile)
   } catch (error) {
-    console.error('Error crawling for', url, error)
+    console.error('Error capturing screenshot for', url, error)
     return callback(error)
   }
 
-  log(`Chromium took ${Date.now() - startTime}ms to load URL and crawl.`)
+  log(`Chromium took ${Date.now() - startTime}ms to load URL and capture screenshot.`)
+
+        screenshotData.text = null
+//      screenshotData.html = null
 
   return callback(null, {
     statusCode: 200,
-    body: data,
-    isBase64Encoded: true,
+    body: JSON.stringify(screenshotData),
     headers: {
-      'Content-Type': 'image/png',
+        'Content-Type': 'application/json'
     },
   })
 }
+

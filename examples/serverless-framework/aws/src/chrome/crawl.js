@@ -61,23 +61,37 @@ export default async function crawlUrl (url, mobile = false) {
       returnByValue: true,
     })
 
+    
+    const expression = `({
+      url: window.location.href,
+      title: document.title,
+      text: document.documentElement.outerText,
+      html: document.documentElement.outerHTML
+    })`;
+
+
+    var resultObj = contentResult.result.value;
+    
     await Emulation.setDeviceMetricsOverride({
       mobile: !!mobile,
       deviceScaleFactor: 0,
       scale: 1, // mobile ? 2 : 1,
       fitWindow: false,
       width: mobile ? 375 : 1280,
-      height,
+      height: height > 5000 ? 5000 : height,
     })
 
     const screenshot = await Page.captureScreenshot({ format: 'png' })
 
-    result = screenshot.data
+    resultObj.screenshot = screenshot.data;
+
+
   } catch (error) {
     console.error(error)
   }
 
   await client.close()
 
-  return result
+  return resultObj
+    
 }
