@@ -26,10 +26,9 @@ export default async function crawlUrl (url, mobile = false) {
     log('Chrome is sending request for:', params.request.url, params.redirectResponse)
   })
 
-  Network.responseReceived((params) => {
-    //const {status, url} = params.response;
-    console.log('responseReceived', params);
-  });
+//  Network.responseReceived((params) => {
+    //console.log('responseReceived', params);
+  //});
 
 
   Page.loadEventFired(() => {
