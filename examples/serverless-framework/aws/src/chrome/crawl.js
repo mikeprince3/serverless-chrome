@@ -67,6 +67,7 @@ export default async function crawlUrl (url, mobile = false) {
 
     log('page loaded')
 
+    var height = 2000
     /*
     const { result: { value: { height } } } = await Runtime.evaluate({
       expression: `(
